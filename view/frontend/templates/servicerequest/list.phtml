@@ -1,0 +1,137 @@
+<?php
+/** @var \Appseconnect\ServiceRequest\Block\ServiceRequest\List $block */
+$serviceRequests = $block->getServiceRequests();
+?>
+<div class="service-request-list">
+    <div class="page-title-wrapper">
+        <h1 class="page-title">
+            <span class="base"><?= $block->escapeHtml(__('My Service Requests')) ?></span>
+        </h1>
+    </div>
+
+    <?php if ($serviceRequests->count() > 0): ?>
+        <div class="table-wrapper">
+            <table class="data table table-service-requests" id="my-service-requests-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="col id"><?= $block->escapeHtml(__('ID')) ?></th>
+                    <th scope="col" class="col device-serial"><?= $block->escapeHtml(__('Device Serial Number')) ?></th>
+                    <th scope="col" class="col model"><?= $block->escapeHtml(__('Model Number')) ?></th>
+                    <th scope="col" class="col issue-type"><?= $block->escapeHtml(__('Issue Type')) ?></th>
+                    <th scope="col" class="col fasc-center"><?= $block->escapeHtml(__('FASC Center')) ?></th>
+                    <th scope="col" class="col created-at"><?= $block->escapeHtml(__('Submitted Date')) ?></th>
+                    <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($serviceRequests as $request): ?>
+                    <tr>
+                        <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
+                            #<?= $block->escapeHtml($request->getId()) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtml(__('Device Serial Number')) ?>" class="col device-serial">
+                            <?= $block->escapeHtml($request->getDeviceSerialNumber()) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtml(__('Model Number')) ?>" class="col model">
+                            <?= $block->escapeHtml($request->getModelNumber()) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtml(__('Issue Type')) ?>" class="col issue-type">
+                            <?php
+                            $issueType = $request->getIssueType();
+                            $issueTypeOptions = $block->getIssueTypeOptions();
+                            echo $issueType && isset($issueTypeOptions[$issueType]) ?
+                                $block->escapeHtml($issueTypeOptions[$issueType]) :
+                                $block->escapeHtml(__('Not Specified'));
+                            ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtml(__('FASC Center')) ?>" class="col fasc-center">
+                            <?= $block->escapeHtml($request->getFascCenter()) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtml(__('Submitted Date')) ?>" class="col created-at">
+                            <?= $block->escapeHtml(date('d-m-Y H:i', strtotime($request->getCreatedAt()))) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                                <span class="status-badge status-<?= $block->escapeHtml($block->getStatusColor($request->getStatus())) ?>">
+                                    <?= $block->escapeHtml($block->getStatusLabel($request->getStatus())) ?>
+                                </span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="message info empty">
+            <span><?= $block->escapeHtml(__('You have not submitted any service requests yet.')) ?></span>
+        </div>
+    <?php endif; ?>
+</div>
+
+<style>
+    .table-service-requests {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-service-requests th,
+    .table-service-requests td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e3e3e3;
+    }
+
+    .table-service-requests th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .status-blue {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    .status-orange {
+        background: #ffedd5;
+        color: #c2410c;
+    }
+
+    .status-green {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .status-gray {
+        background: #f3f4f6;
+        color: #6b7280;
+    }
+
+    .message.info.empty {
+        background: #e7f4fe;
+        border: 1px solid #b3d9f5;
+        padding: 12px 20px;
+        border-radius: 4px;
+        color: #0066cc;
+    }
+
+    @media (max-width: 768px) {
+        .table-service-requests {
+            display: block;
+            overflow-x: auto;
+        }
+
+        .table-service-requests th,
+        .table-service-requests td {
+            padding: 8px;
+            font-size: 14px;
+        }
+    }
+</style>

@@ -1,0 +1,276 @@
+<?php
+/** @var \Appseconnect\ServiceRequest\Block\ServiceRequest\Form $block */
+$customerData = $block->getCustomerData();
+?>
+<div class="service-request-form">
+
+    <form action="<?= $block->escapeUrl($block->getFormAction()) ?>" method="post" id="service-request-form" class="form">
+        <fieldset class="fieldset">
+            <legend class="legend"><span><?= $block->escapeHtml(__('Service Request Details')) ?></span></legend><br>
+
+            <!-- Customer Name -->
+            <div class="field customer-name required">
+                <label for="customer_name" class="label">
+                    <span><?= $block->escapeHtml(__('Customer Name')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="customer_name" id="customer_name"
+                           value="<?= $block->escapeHtmlAttr($customerData['name']) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Customer Name')) ?>"
+                           class="input-text" data-validate="{required:true}" readonly>
+                </div>
+            </div>
+
+            <!-- Customer Email -->
+            <div class="field customer-email required">
+                <label for="customer_email" class="label">
+                    <span><?= $block->escapeHtml(__('Customer Email ID')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="email" name="customer_email" id="customer_email"
+                           value="<?= $block->escapeHtmlAttr($customerData['email']) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Customer Email ID')) ?>"
+                           class="input-text" data-validate="{required:true, 'validate-email':true}" readonly>
+                </div>
+            </div>
+
+            <!-- Customer Mobile -->
+            <div class="field customer-mobile required">
+                <label for="customer_mobile" class="label">
+                    <span><?= $block->escapeHtml(__('Customer Mobile Number')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="customer_mobile" id="customer_mobile"
+                           value="<?= $block->escapeHtmlAttr($customerData['mobile']) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Customer Mobile Number')) ?>"
+                           class="input-text" data-validate="{required:true}" readonly>
+                </div>
+            </div>
+
+            <!-- Device Serial Number -->
+            <div class="field device-serial-number required">
+                <label for="device_serial_number" class="label">
+                    <span><?= $block->escapeHtml(__('Device Serial Number')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="device_serial_number" id="device_serial_number" value=""
+                           title="<?= $block->escapeHtmlAttr(__('Device Serial Number')) ?>"
+                           class="input-text" data-validate="{required:true}">
+                </div>
+            </div>
+
+            <!-- Model Number -->
+            <div class="field model-number required">
+                <label for="model_number" class="label">
+                    <span><?= $block->escapeHtml(__('Model Number')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="model_number" id="model_number" value=""
+                           title="<?= $block->escapeHtmlAttr(__('Model Number')) ?>"
+                           class="input-text" data-validate="{required:true}">
+                </div>
+            </div>
+
+            <!-- Issue Type -->
+            <div class="field issue-type">
+                <label for="issue_type" class="label">
+                    <span><?= $block->escapeHtml(__('Issue Type')) ?></span>
+                </label>
+                <div class="control">
+                    <select name="issue_type" id="issue_type" class="select">
+                        <option value=""><?= $block->escapeHtml(__('Please Select')) ?></option>
+                        <?php foreach ($block->getIssueTypeOptions() as $value => $label): ?>
+                            <option value="<?= $block->escapeHtmlAttr($value) ?>">
+                                <?= $block->escapeHtml($label) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Issue Description -->
+            <div class="field issue-description">
+                <label for="issue_description" class="label">
+                    <span><?= $block->escapeHtml(__('Issue Description')) ?></span>
+                </label>
+                <div class="control">
+                    <textarea name="issue_description" id="issue_description"
+                              title="<?= $block->escapeHtmlAttr(__('Issue Description')) ?>"
+                              class="input-text" rows="5" cols="25"
+                              placeholder="<?= $block->escapeHtmlAttr(__('Describe the issue you are facing...')) ?>"></textarea>
+                </div>
+            </div>
+
+            <!-- City -->
+            <div class="field city required">
+                <label for="city" class="label">
+                    <span><?= $block->escapeHtml(__('City')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="city" id="city"
+                           value="<?= $block->escapeHtmlAttr($customerData['city']) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('City')) ?>"
+                           class="input-text" data-validate="{required:true}">
+                </div>
+            </div>
+
+            <!-- State -->
+            <div class="field state required">
+                <label for="state" class="label">
+                    <span><?= $block->escapeHtml(__('State')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="state" id="state"
+                           value="<?= $block->escapeHtmlAttr($customerData['state']) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('State')) ?>"
+                           class="input-text" data-validate="{required:true}">
+                </div>
+            </div>
+
+            <!-- FASC Center -->
+            <div class="field fasc-center required">
+                <label for="fasc_center" class="label">
+                    <span><?= $block->escapeHtml(__('FASC Center')) ?></span>
+                </label>
+                <div class="control">
+                    <select name="fasc_center" id="fasc_center" class="select" data-validate="{required:true}">
+                        <option value=""><?= $block->escapeHtml(__('Please Select')) ?></option>
+                        <?php foreach ($block->getFascCenterOptions() as $value => $label): ?>
+                            <option value="<?= $block->escapeHtmlAttr($value) ?>">
+                                <?= $block->escapeHtml($label) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="actions-toolbar view-requests">
+                <div class="secondary">
+                    <a class="action view" href="<?= $block->escapeUrl($block->getUrl('servicerequest/index/history')) ?>">
+                        <span><?= $block->escapeHtml(__('View My Service Requests History')) ?></span>
+                    </a>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action submit primary" title="<?= $block->escapeHtmlAttr(__('Submit Service Request')) ?>">
+                    <span><?= $block->escapeHtml(__('Submit Service Request')) ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    require(['jquery', 'mage/validation'], function($){
+        $(document).ready(function(){
+            $('#service-request-form').validation();
+        });
+    });
+</script>
+
+<style>
+    .service-request-form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .field {
+        margin-bottom: 20px;
+    }
+
+    .label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .control input[type="text"],
+    .control input[type="email"],
+    .control select,
+    .control textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    .control input[type="text"]:focus,
+    .control input[type="email"]:focus,
+    .control select:focus,
+    .control textarea:focus {
+        border-color: #1979c3;
+        outline: none;
+        box-shadow: 0 0 5px rgba(25, 121, 195, 0.3);
+    }
+
+    .control input[readonly] {
+        background-color: #f8f9fa;
+        cursor: not-allowed;
+    }
+
+    .control textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .control select {
+        height: 46px;
+        background: white;
+    }
+
+    .actions-toolbar {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .action.primary {
+        background: #1979c3;
+        border-color: #1979c3;
+        color: #fff;
+        padding: 12px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .action.primary:hover {
+        background: #006bb4;
+        border-color: #006bb4;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .field.required .label:after {
+        content: '*';
+        color: #e02b27;
+        font-size: 1.2rem;
+        margin: 0 0 0 5px;
+    }
+
+    .mage-error {
+        color: #e02b27;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .service-request-form {
+            padding: 0 15px;
+        }
+
+        .control input[type="text"],
+        .control input[type="email"],
+        .control select,
+        .control textarea {
+            padding: 10px;
+        }
+    }
+</style>
